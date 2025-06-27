@@ -12,6 +12,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.util.List;
 
+import static kkkombinator.Stator.ArgManager.handleArg;
+
 public class Runner {
     FloatStatistics floatStatistics;
     IntegerStatistic integerStatistic;
@@ -35,13 +37,11 @@ public class Runner {
             try (BufferedReader reader = new BufferedReader(new FileReader(t))) {
                 String line;
                 while ((line = reader.readLine()) != null) {
-                    System.out.println(line);
+                    handleArg(line, stringStatistic, integerStatistic, floatStatistics);
                 }
             } catch (IOException e) {
-                System.err.println("Ошибка при чтении файла: " + e.getMessage());
+                System.err.println("Error while reading file: " + e.getMessage());
             }
         }
     }
-
-
 }

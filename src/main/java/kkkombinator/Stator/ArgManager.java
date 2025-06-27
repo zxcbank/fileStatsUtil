@@ -5,6 +5,9 @@ import kkkombinator.Statistics.FloatStatistics;
 import kkkombinator.Statistics.IntegerStatistic;
 import kkkombinator.Statistics.StringStatistics;
 
+import static java.lang.Math.max;
+import static java.lang.Math.min;
+
 public class ArgManager {
     public static Class<?> detectType(String value) throws IllegalArgumentException{
         if (value == null || value.isEmpty()) {
@@ -26,16 +29,29 @@ public class ArgManager {
         throw new IllegalArgumentException("Wrong String: " + value);
     }
 
-    public static void handleStringArgs(String arg, StringStatistics stringStatistic) throws ExecutionControl.NotImplementedException {
-        throw new ExecutionControl.NotImplementedException("no handleStringArgs");
+    public static void handleStringArgs(String arg, StringStatistics stringStatistic)   {
+
+        stringStatistic.maxStringLength = max(stringStatistic.maxStringLength, arg.length());
+        stringStatistic.minStringLength = min(stringStatistic.minStringLength, arg.length());
+        stringStatistic.numberOfStrings++;
     }
 
-    public static void handleIntegerArg(String arg, IntegerStatistic integerStatistic) throws ExecutionControl.NotImplementedException {
-        throw new ExecutionControl.NotImplementedException("no handleIntegerArg");
+    public static void handleIntegerArg(String arg, IntegerStatistic integerStatistic)  {
+        int number = Integer.parseInt(arg);
+
+        integerStatistic.maxInteger = max(integerStatistic.maxInteger, number);
+        integerStatistic.minInteger = min(integerStatistic.minInteger, number);
+        integerStatistic.numberOfIntegers++;
+        integerStatistic.sumOfIntegers += number;
     }
 
-    public static void handleFloatArg(String Arg, FloatStatistics floatStatistics) throws ExecutionControl.NotImplementedException {
-        throw new  ExecutionControl.NotImplementedException("no handleFloatArg");
+    public static void handleFloatArg(String arg, FloatStatistics floatStatistics) {
+        float number = Float.parseFloat(arg);
+
+        floatStatistics.maxFloats = max(floatStatistics.maxFloats, number);
+        floatStatistics.minFloats = min(floatStatistics.minFloats, number);
+        floatStatistics.numberOfFloats++;
+        floatStatistics.sumOfFloats += number;
     }
 
     public static void handleArg(String arg,
