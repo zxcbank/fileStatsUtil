@@ -1,6 +1,6 @@
 package kkkombinator.Statistics;
 
 public class IntegerStatistic {
-    public Integer numberOfIntegers=0, minInteger=Integer.MAX_VALUE, maxInteger=Integer.MIN_VALUE, sumOfIntegers=0;
+    public Long numberOfIntegers=0L, minInteger=Long.MAX_VALUE, maxInteger=Long.MIN_VALUE, sumOfIntegers=0L;
     public Float avgOfIntegers=0.0f;
 }
