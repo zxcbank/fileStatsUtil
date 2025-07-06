@@ -1,9 +1,15 @@
 package kkkombinator.Stator;
 
-import jdk.jshell.spi.ExecutionControl;
 import kkkombinator.Statistics.FloatStatistics;
 import kkkombinator.Statistics.IntegerStatistic;
 import kkkombinator.Statistics.StringStatistics;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.sql.SQLOutput;
 
 import static java.lang.Math.max;
 import static java.lang.Math.min;
@@ -29,14 +35,14 @@ public class ArgManager {
         throw new IllegalArgumentException("Wrong String: " + value);
     }
 
-    public static void handleStringArgs(String arg, StringStatistics stringStatistic)   {
+    public static void manageStringStat(String arg, StringStatistics stringStatistic)   {
 
         stringStatistic.maxStringLength = max(stringStatistic.maxStringLength, arg.length());
         stringStatistic.minStringLength = min(stringStatistic.minStringLength, arg.length());
         stringStatistic.numberOfStrings++;
     }
 
-    public static void handleIntegerArg(String arg, IntegerStatistic integerStatistic)  {
+    public static void manageIntegerStat(String arg, IntegerStatistic integerStatistic)  {
         int number = Integer.parseInt(arg);
 
         integerStatistic.maxInteger = max(integerStatistic.maxInteger, number);
@@ -45,7 +51,7 @@ public class ArgManager {
         integerStatistic.sumOfIntegers += number;
     }
 
-    public static void handleFloatArg(String arg, FloatStatistics floatStatistics) {
+    public static void manageFloatStat(String arg, FloatStatistics floatStatistics) {
         float number = Float.parseFloat(arg);
 
         floatStatistics.maxFloats = max(floatStatistics.maxFloats, number);
@@ -54,23 +60,37 @@ public class ArgManager {
         floatStatistics.sumOfFloats += number;
     }
 
-    public static void handleArg(String arg,
-                                 StringStatistics stringStatistic,
-                                 IntegerStatistic integerStatistic,
-                                 FloatStatistics floatStatistics) {
-        try {
-            Class<?> type = detectType(arg);
-            if (type.equals(String.class)) {
-                handleStringArgs(arg, stringStatistic);
-            } else if (type.equals(Integer.class)) {
-                handleIntegerArg(arg, integerStatistic);
-            } else if (type.equals(Float.class)) {
-                handleFloatArg(arg, floatStatistics);
-            }
-        } catch (IllegalArgumentException e) {
-//            System.err.println("no match for" + arg); for debug purposes
-//            e.printStackTrace();
-        }
+    public static <T> void fileWriteArg(String filePath, T arg) {
+        var path = Paths.get(filePath);
 
+        if (!Files.exists(path)) {
+            try {
+                Path createdFile = Files.createFile(path);
+                Files.write(createdFile, arg.toString().getBytes());
+            } catch (IOException e) {
+                System.err.println("не удалось создать файл или записать в файл по пути: " + filePath);
+            }
+        } else {
+            try {
+                Files.write(path, arg.toString().getBytes());
+            } catch( IOException e) {
+                System.err.println("не удалось записать информацию в файл по пути: " + filePath);
+            }
+        }
+    }
+
+    public static void handleFloatArg(String arg, FloatStatistics floatStatistics, String filePath) {
+        manageFloatStat(arg, floatStatistics);
+        fileWriteArg(filePath, arg);
+    }
+
+    public static void handleStringArg(String arg,  StringStatistics stringStatistic, String filePath) {
+        manageStringStat(arg, stringStatistic);
+        fileWriteArg(filePath, arg);
+    }
+
+    public static void handleIntegerArg(String arg,  IntegerStatistic integerStatistic, String filePath) {
+        manageIntegerStat(arg, integerStatistic);
+        fileWriteArg(filePath, arg);
     }
 }

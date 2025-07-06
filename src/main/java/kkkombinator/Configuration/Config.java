@@ -25,7 +25,7 @@ public class Config {
     @Parameter(names = "-f", description = "constraint for full statistic.")
     public Boolean fullStatistics;
 
-    final String integersFileName = "integers.txt";
-    final String stringsFileName = "strings.txt";
-    final String floatsFileName = "floats.txt";
+    public final String integersFileName = "integers.txt";
+    public final String stringsFileName = "strings.txt";
+    public final String floatsFileName = "floats.txt";
 }
