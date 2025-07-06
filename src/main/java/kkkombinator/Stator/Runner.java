@@ -14,9 +14,21 @@ import static kkkombinator.Stator.StatsPrinter.printSmallStats;
 import static kkkombinator.Stator.StatsPrinter.printStats;
 
 public class Runner {
-    FloatStatistics floatStatistics;
-    IntegerStatistic integerStatistic;
-    StringStatistics stringStatistic;
+    private FloatStatistics floatStatistics;
+    private IntegerStatistic integerStatistic;
+    private StringStatistics stringStatistic;
+
+    public StringStatistics getStringStatistics() {
+        return stringStatistic;
+    }
+
+    public IntegerStatistic getIntegerStatistic() {
+        return integerStatistic;
+    }
+
+    public FloatStatistics getFloatStatistics() {
+        return floatStatistics;
+    }
 
     Config config;
 

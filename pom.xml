@@ -20,6 +20,18 @@
             <artifactId>jcommander</artifactId>
             <version>1.82</version>
         </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>5.11.0-M1</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>5.11.0-M1</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
 </project>
